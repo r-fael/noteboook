@@ -3,3 +3,25 @@
 html {
   overflow-x: hidden;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #383838;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4d4c4c;
+  border-radius: 10px;
+  border: 2px solid #383838;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4d4c4c;
+}
