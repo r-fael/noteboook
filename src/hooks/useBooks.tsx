@@ -15,7 +15,7 @@ const booksMock: IBook[] = [
     name: 'Projects',
     pages: [
       {
-        name: 'rafael',
+        name: 'exemple',
         content: `
 # **Título de Nível 1**  
 ## **Título de Nível 2**  
@@ -68,6 +68,13 @@ Bloco de código:
 def hello():
     print("Olá, Mundo!")
 \`\`\`
+---
+# **Tabela**
+| Produto   | Preço  | Estoque  |
+|:---------:|:------:|:--------:|
+| Notebook  | R$3000 |    10    |
+| Mouse     | R$100  |    50    |
+
 `,
       },
     ],
@@ -80,11 +87,13 @@ interface IBookContext {
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
   value: string | undefined;
   addPage: (book: string) => void;
-  addBook: () => void;
+  addBook: (bookName: string) => void;
   books: IBook[];
   selectedBook: string;
   selectedPage: string;
   handleSelectPage: (book: string, page: string) => void;
+  bookInputIsOpen: boolean;
+  setBookInputIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -96,6 +105,8 @@ const BookContext = createContext<IBookContext>({
   handleSelectPage: () => {},
   selectedBook: '',
   selectedPage: '',
+  setBookInputIsOpen: () => {},
+  bookInputIsOpen: false,
 });
 
 interface IBookProvider {
@@ -115,6 +126,7 @@ export interface IPage {
 export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [value, setValue] = useState<string | undefined>('');
   const [books, setBooks] = useState<IBook[]>([]);
+  const [bookInputIsOpen, setBookInputIsOpen] = useState<boolean>(false);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [selectedPage, setSelectedPage] = useState<string>('');
 
@@ -122,8 +134,8 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setBooks(booksMock);
   }, []);
 
-  const addBook = () => {
-    setBooks((books) => [...books, newBook]);
+  const addBook = (bookName: string) => {
+    setBooks((books) => [...books, { ...newBook, name: bookName }]);
   };
 
   const addPage = (bookName: string) => {
@@ -153,6 +165,8 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         selectedBook,
         selectedPage,
         handleSelectPage,
+        setBookInputIsOpen,
+        bookInputIsOpen,
       }}
     >
       {children}
