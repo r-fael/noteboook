@@ -35,7 +35,6 @@ const BookInput: React.FC<IBookInput> = ({
         autoFocus
         className="bg-zinc-800 self-center p-2 outline-0 rounded-sm border-4 border-zinc-700 font-black"
         onKeyDown={(e) => {
-          console.log(e.currentTarget.value);
           if (e.key === 'Enter') {
             if (e.currentTarget.value.trim() != '') {
               handleValue(e.currentTarget.value);
@@ -45,7 +44,6 @@ const BookInput: React.FC<IBookInput> = ({
           }
         }}
         onBlur={(e) => {
-          console.log(e.target.value);
           if (e.target.value.trim() !== '') {
             handleValue(e.target.value.trim());
           }

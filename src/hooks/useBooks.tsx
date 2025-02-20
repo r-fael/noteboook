@@ -93,6 +93,7 @@ interface IBookContext {
   selectedPage: string;
   handleSelectPage: (book: string, page: string) => void;
   isEditing: boolean;
+  editBook: (bookName: string, newBookName: string) => void;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -107,6 +108,7 @@ const BookContext = createContext<IBookContext>({
   selectedPage: '',
   isEditing: false,
   setIsEditing: () => {},
+  editBook: () => {},
 });
 
 interface IBookProvider {
@@ -149,6 +151,17 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setBooks(newBooks);
   };
 
+  const editBook = (bookName: string, newBookName: string) => {
+    let newBooks = [...books];
+    newBooks = newBooks.map((book) => {
+      if (book.name == bookName) {
+        return { ...book, name: newBookName };
+      }
+      return book;
+    });
+    setBooks(newBooks);
+  };
+
   const handleSelectPage = (book: string, page: string) => {
     setSelectedBook(book);
     setSelectedPage(page);
@@ -167,6 +180,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         handleSelectPage,
         isEditing,
         setIsEditing,
+        editBook,
       }}
     >
       {children}
