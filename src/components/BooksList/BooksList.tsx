@@ -77,7 +77,7 @@ const BooksList: React.FC<IBooksList> = () => {
         />
       ) : null}
       <div
-        className="flex font-black rounded-sm text-[1.1rem] hover:bg-zinc-800 p-2 hover:cursor-pointer justify-start hover:border-zinc-100 border-2 my-4 border-zinc-950 text-zinc-500 hover:text-zinc-100 transition ease-in"
+        className="flex font-black rounded-sm text-[1.1rem] p-2 hover:cursor-pointer justify-start hover:border-zinc-100 border-2 my-4 border-zinc-950 text-zinc-500 hover:text-zinc-100 transition ease-in"
         onClick={() => setBookInputIsOpen(true)}
       >
         + add book
