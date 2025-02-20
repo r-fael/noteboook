@@ -92,6 +92,8 @@ interface IBookContext {
   selectedBook: string;
   selectedPage: string;
   handleSelectPage: (book: string, page: string) => void;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -103,6 +105,8 @@ const BookContext = createContext<IBookContext>({
   handleSelectPage: () => {},
   selectedBook: '',
   selectedPage: '',
+  isEditing: false,
+  setIsEditing: () => {},
 });
 
 interface IBookProvider {
@@ -124,6 +128,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [books, setBooks] = useState<IBook[]>([]);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [selectedPage, setSelectedPage] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
     setBooks(booksMock);
@@ -160,6 +165,8 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         selectedBook,
         selectedPage,
         handleSelectPage,
+        isEditing,
+        setIsEditing,
       }}
     >
       {children}
