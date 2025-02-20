@@ -8,10 +8,15 @@ interface IBooksList {
 
 interface IBookInput {
   constraints: string[];
+  setBookInputIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const BookInput: React.FC<IBookInput> = ({ constraints }) => {
-  const { setBookInputIsOpen, addBook } = useBooks();
+const BookInput: React.FC<IBookInput> = ({
+  constraints,
+  setBookInputIsOpen,
+}) => {
+  const { addBook } = useBooks();
+
   const [error, setError] = useState<boolean>(false);
 
   const handleValue = (value: string) => {
@@ -56,16 +61,20 @@ const BookInput: React.FC<IBookInput> = ({ constraints }) => {
   );
 };
 
-const BooksList: React.FC<IBooksList> = ({ setValue }) => {
-  const { books, setBookInputIsOpen, bookInputIsOpen } = useBooks();
+const BooksList: React.FC<IBooksList> = () => {
+  const { books } = useBooks();
+  const [bookInputIsOpen, setBookInputIsOpen] = useState<boolean>(false);
 
   return (
     <div className="text-xs lg:w-[12vw] w-auto flex flex-col p-2">
       {books.map((book, key) => (
-        <BookOption key={key} book={book} setValue={setValue} />
+        <BookOption key={key} book={book} />
       ))}
       {bookInputIsOpen ? (
-        <BookInput constraints={books.map((book) => book.name)} />
+        <BookInput
+          setBookInputIsOpen={setBookInputIsOpen}
+          constraints={books.map((book) => book.name)}
+        />
       ) : null}
       <div
         className="flex font-black rounded-sm text-[1.1rem] hover:bg-zinc-800 p-2 hover:cursor-pointer justify-center"
