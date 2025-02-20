@@ -15,7 +15,7 @@ const PageOption: React.FC<IPageOption> = ({ book, page, key }) => {
         selectedPage === page.name && book.name === selectedBook
           ? 'bg-zinc-800'
           : ''
-      } rounded-sm text-[0.9rem] hover:bg-zinc-800 hover:cursor-pointer p-1 ml-8 mt-2`}
+      } rounded-sm text-[0.9rem] hover:bg-zinc-800 hover:cursor-pointer p-1 ml-8`}
       key={key}
       onClick={() => {
         setValue(page.content);

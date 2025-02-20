@@ -1,17 +1,13 @@
-## modal
-
-- [ ] add page
-- [ ] add book
-- [ ] edit page
 - [ ] edit book
-
----
-
-- [ ] hide unhide
-- [x] add page
+- [ ] edit page
 - [ ] delete book
 - [ ] delete page
 - [ ] save in cache
 - [ ] commands
 - [ ] add title of file
+- [ ] add search
+- [ ] add tags
+- [x] add page
+- [x] add book
+- [x] hide unhide
 - [x] add selected
