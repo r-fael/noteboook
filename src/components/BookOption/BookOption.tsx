@@ -97,7 +97,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           <input
             autoFocus
             defaultValue={book.name}
-            className="text-[0.9rem] outline-0 w-[8rem]"
+            className="outline-0 w-[8rem]"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (e.currentTarget.value.trim() != '') {
