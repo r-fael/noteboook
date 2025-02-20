@@ -11,7 +11,7 @@ function App() {
     <div className="font-['Poppins'] w-screen min-h-screen">
       <div className="bg-gray-950 flex flex-col min-h-screen text-zinc-200">
         <Header />
-        <div className="flex flex-col lg:flex-row h-max pl-6 pr-6 pb-8 flex-1">
+        <div className="flex flex-col lg:flex-row h-max lg:px-6 px-4 pb-8 flex-1">
           <BooksList setValue={setValue} />
           {isEditing ? (
             <MonacoEditor value={value} setValue={setValue} />
