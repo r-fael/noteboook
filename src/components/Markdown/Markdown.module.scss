@@ -120,7 +120,39 @@
   background-color: #4d4c4c;
 }
 
-.markdown input[type='checkbox'] {
-  margin-inline: 0.5rem;
-  transform: scale(2);
+.markdown ul[class="contains-task-list"] {
+  list-style-type: none;
+}
+
+.markdown input[type="checkbox"] {
+  appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #333;
+  border-radius: 2px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transform: translate(-0.2rem, 5px);
+}
+
+.markdown input[type="checkbox"]:checked {
+  background-color: #4d4c4c;
+  border-color: #4d4c4c;
+}
+
+.markdown input[type="checkbox"]:checked::after {
+  content: 'X';
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.markdown label {
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 5px;
 }
