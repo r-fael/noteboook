@@ -15,7 +15,7 @@ const booksMock: IBook[] = [
     name: 'Projects',
     pages: [
       {
-        name: 'exemple',
+        name: 'example',
         content: `
 # **Título de Nível 1**  
 ## **Título de Nível 2**  
@@ -86,14 +86,12 @@ def hello():
 interface IBookContext {
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
   value: string | undefined;
-  addPage: (book: string) => void;
+  addPage: (book: string, page: string) => void;
   addBook: (bookName: string) => void;
   books: IBook[];
   selectedBook: string;
   selectedPage: string;
   handleSelectPage: (book: string, page: string) => void;
-  bookInputIsOpen: boolean;
-  setBookInputIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -105,8 +103,6 @@ const BookContext = createContext<IBookContext>({
   handleSelectPage: () => {},
   selectedBook: '',
   selectedPage: '',
-  setBookInputIsOpen: () => {},
-  bookInputIsOpen: false,
 });
 
 interface IBookProvider {
@@ -126,7 +122,6 @@ export interface IPage {
 export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [value, setValue] = useState<string | undefined>('');
   const [books, setBooks] = useState<IBook[]>([]);
-  const [bookInputIsOpen, setBookInputIsOpen] = useState<boolean>(false);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [selectedPage, setSelectedPage] = useState<string>('');
 
@@ -138,11 +133,11 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setBooks((books) => [...books, { ...newBook, name: bookName }]);
   };
 
-  const addPage = (bookName: string) => {
+  const addPage = (bookName: string, pageName: string) => {
     let newBooks = [...books];
     newBooks = newBooks.map((book) => {
       if (book.name == bookName) {
-        book.pages = [...book.pages, newPage];
+        book.pages = [...book.pages, { ...newPage, name: pageName }];
       }
       return book;
     });
@@ -165,8 +160,6 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         selectedBook,
         selectedPage,
         handleSelectPage,
-        setBookInputIsOpen,
-        bookInputIsOpen,
       }}
     >
       {children}
