@@ -1,5 +1,3 @@
-- [ ] edit book
-- [ ] edit page
 - [ ] delete book
 - [ ] delete page
 - [ ] save in cache
@@ -7,6 +5,9 @@
 - [ ] add title of file
 - [ ] add search
 - [ ] add tags
+- [ ] add trash
+- [x] edit book
+- [x] edit page
 - [x] add page
 - [x] add book
 - [x] hide unhide
