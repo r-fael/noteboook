@@ -101,7 +101,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           ) : null}
           <div
             onClick={() => setPageInputIsOpen(true)}
-            className="flex rounded-sm text-[0.9rem] w-auto hover:bg-zinc-800 hover:cursor-pointer p-1 mt-2 ml-8 border-2 hover:border-zinc-300 border-zinc-950 justify-center"
+            className="flex rounded-sm text-[0.9rem] w-auto hover:bg-zinc-800 hover:cursor-pointer p-1 mt-2 ml-8 border-2 hover:border-zinc-300 border-zinc-950 justify-start text-zinc-500 hover:text-zinc-100 transition ease-in"
           >
             + add page
           </div>
