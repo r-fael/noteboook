@@ -38,7 +38,7 @@ const PageInput: React.FC<IPageInput> = ({
     <div className="flex flex-col gap-2">
       <input
         autoFocus
-        className="bg-zinc-800 text-[0.9rem] p-1 ml-8 mt-2 outline-0 rounded-sm border-3 border-zinc-700 font-black"
+        className="bg-zinc-800 text-[0.9rem] p-1 ml-8 outline-0 rounded-sm border-3 border-zinc-700 font-black"
         onKeyDown={(e) => {
           console.log(e.currentTarget.value);
           if (e.key === 'Enter') {
@@ -72,7 +72,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
   const { selectedBook } = useBooks();
 
   return (
-    <div className="flex flex-col p-2 select-none font-black">
+    <div className="flex flex-col select-none font-black">
       <div
         className={`${
           selectedBook === book.name ? 'bg-zinc-800' : ''
@@ -88,7 +88,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
         ) : null}
       </div>
       {isOpen ? (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2 mt-2">
           {book.pages.map((page, key) => (
             <PageOption book={book} page={page} key={key} />
           ))}
@@ -101,7 +101,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           ) : null}
           <div
             onClick={() => setPageInputIsOpen(true)}
-            className="flex rounded-sm text-[0.9rem] w-auto hover:cursor-pointer p-1 mt-2 ml-8 border-2 hover:border-zinc-300 border-zinc-950 justify-start text-zinc-500 hover:text-zinc-100 transition ease-in"
+            className="flex rounded-sm text-[0.9rem] w-auto hover:cursor-pointer p-1 ml-8 border-2 hover:border-zinc-300 border-zinc-950 justify-start text-zinc-500 hover:text-zinc-100 transition ease-in"
           >
             + add page
           </div>

@@ -66,7 +66,7 @@ const BooksList: React.FC<IBooksList> = () => {
   const [bookInputIsOpen, setBookInputIsOpen] = useState<boolean>(false);
 
   return (
-    <div className="text-xs lg:w-[15vw] w-auto flex flex-col p-2">
+    <div className="text-xs lg:w-[15vw] w-auto flex flex-col p-2 gap-2">
       {books.map((book, key) => (
         <BookOption key={key} book={book} />
       ))}
