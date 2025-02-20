@@ -12,10 +12,10 @@ const newPage: IPage = {
 
 const booksMock: IBook[] = [
   {
-    name: 'Projects',
+    name: 'Book',
     pages: [
       {
-        name: 'example',
+        name: 'page',
         content: `
 # **Título de Nível 1**  
 ## **Título de Nível 2**  
@@ -79,8 +79,6 @@ def hello():
       },
     ],
   },
-  { name: 'College', pages: [] },
-  { name: 'Work', pages: [] },
 ];
 
 interface IBookContext {
