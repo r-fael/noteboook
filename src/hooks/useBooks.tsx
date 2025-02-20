@@ -157,6 +157,9 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     let newBooks = [...books];
     newBooks = newBooks.map((book) => {
       if (book.name == bookName) {
+        if (book.name == selectedBook) {
+          setSelectedBook(newBookName);
+        }
         return { ...book, name: newBookName };
       }
       return book;
@@ -174,6 +177,9 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       if (book.name == bookName) {
         book.pages = book.pages.map((page) => {
           if (page.name === pageName) {
+            if (bookName === selectedBook && page.name === selectedPage) {
+              setSelectedPage(newPageName);
+            }
             page.name = newPageName;
           }
           return page;
