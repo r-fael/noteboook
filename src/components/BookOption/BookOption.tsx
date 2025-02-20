@@ -66,10 +66,9 @@ const PageInput: React.FC<IPageInput> = ({
 
 const BookOption: React.FC<IBookOption> = ({ book }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [pageInputIsOpen, setPageInputIsOpen] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-
   const { selectedBook, books, editBook } = useBooks();
 
   const handleValue = (value: string) => {
@@ -95,30 +94,28 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
         </div>
 
         {isEditing ? (
-          <div className="flex flex-col gap-2">
-            <input
-              autoFocus
-              defaultValue={book.name}
-              className="text-[0.9rem] outline-0 w-[8rem]"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  if (e.currentTarget.value.trim() != '') {
-                    handleValue(e.currentTarget.value);
-                  } else {
-                    setError(false);
-                    setIsEditing(false);
-                  }
+          <input
+            autoFocus
+            defaultValue={book.name}
+            className="text-[0.9rem] outline-0 w-[8rem]"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                if (e.currentTarget.value.trim() != '') {
+                  handleValue(e.currentTarget.value);
+                } else {
+                  setError(false);
+                  setIsEditing(false);
                 }
-              }}
-              onBlur={(e) => {
-                if (e.target.value.trim() !== '') {
-                  handleValue(e.target.value.trim());
-                }
-                setError(false);
-                setIsEditing(false);
-              }}
-            />
-          </div>
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target.value.trim() !== '') {
+                handleValue(e.target.value.trim());
+              }
+              setError(false);
+              setIsEditing(false);
+            }}
+          />
         ) : (
           <h3
             className="break-all"
@@ -158,7 +155,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
       ) : null}
       {error ? (
         <span className="text-[0.8rem] text-red-400  p-1 ml-8 mt-2">
-          Error: this page name was already added
+          Error: this book name was already added
         </span>
       ) : null}
     </div>
