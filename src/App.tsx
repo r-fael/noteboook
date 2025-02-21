@@ -13,7 +13,7 @@ function App() {
         <Header />
         <div className="flex flex-col lg:flex-row h-max lg:px-6 px-4 pb-8 flex-1">
           <BooksList setValue={setValue} />
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col flex-1 gap-2">
             {selectedBook != '' && selectedPage != '' ? (
               <div className="flex font-black gap-2 text-2xl mx-2">
                 <h1>{selectedBook}</h1> / <h1>{selectedPage}</h1>
