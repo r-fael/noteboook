@@ -32,8 +32,10 @@ function App() {
 
           <div className="flex flex-col flex-1 gap-2">
             {selectedBook != '' && selectedPage != '' ? (
-              <div className="flex font-black gap-2 text-2xl mx-2">
-                <h1>{selectedBook}</h1> / <h1>{selectedPage}</h1>
+              <div className="flex font-black text-2xl mx-2 break-all">
+                <h1>
+                  {selectedBook} / {selectedPage}
+                </h1>
               </div>
             ) : null}
             <div className="flex flex-col lg:flex-row h-max">

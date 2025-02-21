@@ -41,7 +41,7 @@ const PageOption: React.FC<IPageOption> = ({ book, page, key }) => {
           <input
             autoFocus
             defaultValue={page.name}
-            className="outline-0"
+            className="outline-0 w-full"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (e.currentTarget.value.trim() != '') {
