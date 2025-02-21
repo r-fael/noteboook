@@ -89,7 +89,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
         } flex flex-row gap-2 items-center rounded-sm text-[1rem] hover:bg-zinc-800 p-2  hover:cursor-pointer`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="w-6 h-6 flex items-center justify-center">
+        <div className="w-6 h-6 flex items-center justify-center  self-start">
           {isOpen ? <Down /> : <Right />}
         </div>
 
@@ -97,7 +97,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           <input
             autoFocus
             defaultValue={book.name}
-            className="outline-0 w-[8rem]"
+            className="outline-0 w-[6rem] self-start"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (e.currentTarget.value.trim() != '') {
@@ -118,7 +118,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           />
         ) : (
           <h3
-            className="break-all"
+            className="break-all  self-start"
             onClick={(e) => {
               e.stopPropagation();
               setIsEditing(true);
@@ -128,7 +128,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           </h3>
         )}
         {book.pages.length > 0 ? (
-          <h1 className="bg-zinc-700 text-[0.8rem] font-black rounded-4xl px-[0.5rem] h-[1.2rem] flex items-center justify-center">
+          <h1 className="bg-zinc-700 text-[0.8rem] font-black rounded-4xl px-[0.5rem] h-[1.2rem] flex items-center justify-center self-start">
             {book.pages.length}
           </h1>
         ) : null}
