@@ -16,7 +16,7 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
   };
 
   return (
-    <div className="m-2 lg:h-[31rem] h-[40rem] lg:w-[40vw] w-auto border-4 border-zinc-800 rounded-sm">
+    <div className="lg:h-[76vh] h-[40rem] lg:w-[40vw] w-auto border-4 border-zinc-800 rounded-sm">
       <Editor
         width="auto"
         height="100%"
