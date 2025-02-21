@@ -16,8 +16,7 @@ const booksMock: IBook[] = [
     pages: [
       {
         name: 'page',
-        content: `
-# **Título de Nível 1**  
+        content: `# **Título de Nível 1**  
 ## **Título de Nível 2**  
 ### **Título de Nível 3**  
 #### **Título de Nível 4**  
@@ -94,6 +93,7 @@ interface IBookContext {
   editBook: (bookName: string, newBookName: string) => void;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   editPage: (bookName: string, pageName: string, newPageName: string) => void;
+  handleEditContent: (content: string) => void;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -109,6 +109,7 @@ const BookContext = createContext<IBookContext>({
   setIsEditing: () => {},
   editBook: () => {},
   editPage: () => {},
+  handleEditContent: () => {},
 });
 
 interface IBookProvider {
@@ -193,6 +194,22 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setSelectedPage(page);
   };
 
+  const handleEditContent = (content: string) => {
+    let newBooks = [...books];
+    newBooks = newBooks.map((book) => {
+      if (book.name == selectedBook) {
+        book.pages = book.pages.map((page) => {
+          if (page.name === selectedPage) {
+            page.content = content;
+          }
+          return page;
+        });
+      }
+      return book;
+    });
+    setBooks(newBooks);
+  };
+
   return (
     <BookContext.Provider
       value={{
@@ -208,6 +225,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         setIsEditing,
         editBook,
         editPage,
+        handleEditContent,
       }}
     >
       {children}
