@@ -2,10 +2,10 @@
 - [ ] delete page
 - [ ] save in cache
 - [ ] commands
-- [ ] add title of file
 - [ ] add search
 - [ ] add tags
 - [ ] add trash
+- [x] add title of file
 - [x] edit book
 - [x] edit page
 - [x] add page
