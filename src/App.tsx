@@ -21,7 +21,7 @@ function App() {
           <>
             <div
               onClick={() => setIsListHidden((o) => !o)}
-              className="lg:h-auto bg-zinc-800 hover:cursor-pointer hover:bg-zinc-700 rounded-md flex items-center mb-4 lg:m-2 lg:mt-0 p-2 justify-center"
+              className="lg:h-[34rem] bg-zinc-800 hover:cursor-pointer hover:bg-zinc-700 rounded-md flex items-center mb-4 lg:m-2 lg:mt-0 p-2 justify-center"
             >
               <div className="w-[1.5rem] h-[1.5rem] flex justify-center items-center lg:rotate-none rotate-90">
                 {isListHidden ? <ArrowRight /> : <ArrowLeft />}
