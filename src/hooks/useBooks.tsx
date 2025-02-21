@@ -6,16 +6,16 @@ const newBook: IBook = {
 };
 
 const newPage: IPage = {
-  name: 'new page',
-  content: '# test',
+  name: '',
+  content: '',
 };
 
 const booksMock: IBook[] = [
   {
-    name: 'Book',
+    name: 'Tutorial',
     pages: [
       {
-        name: 'page',
+        name: 'tutorial',
         content: `# **Título de Nível 1**  
 ## **Título de Nível 2**  
 ### **Título de Nível 3**  
@@ -94,6 +94,10 @@ interface IBookContext {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   editPage: (bookName: string, pageName: string, newPageName: string) => void;
   handleEditContent: (content: string) => void;
+  deletePage: () => void;
+  deleteBook: () => void;
+  isConfirmDeleteOpen: boolean;
+  setIsConfirmDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -107,9 +111,13 @@ const BookContext = createContext<IBookContext>({
   selectedPage: '',
   isEditing: false,
   setIsEditing: () => {},
+  isConfirmDeleteOpen: false,
+  setIsConfirmDeleteOpen: () => {},
   editBook: () => {},
   editPage: () => {},
   handleEditContent: () => {},
+  deletePage: () => {},
+  deleteBook: () => {},
 });
 
 interface IBookProvider {
@@ -132,10 +140,23 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [selectedPage, setSelectedPage] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] =
+    useState<boolean>(false);
+  const [initialized, setInitialized] = useState<boolean>();
 
   useEffect(() => {
-    setBooks(booksMock);
+    const stateParsed = JSON.parse(localStorage.getItem('books') || '[]');
+    if (stateParsed.length === 0) {
+      setBooks(booksMock);
+    } else {
+      setBooks(stateParsed);
+    }
+    setInitialized(true);
   }, []);
+
+  useEffect(() => {
+    if (initialized) localStorage.setItem('books', JSON.stringify(books));
+  }, [books]);
 
   const addBook = (bookName: string) => {
     setBooks((books) => [...books, { ...newBook, name: bookName }]);
@@ -192,6 +213,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const handleSelectPage = (book: string, page: string) => {
     setSelectedBook(book);
     setSelectedPage(page);
+    setIsConfirmDeleteOpen(false);
   };
 
   const handleEditContent = (content: string) => {
@@ -207,6 +229,36 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       }
       return book;
     });
+    setBooks(newBooks);
+  };
+
+  const deletePage = () => {
+    let newBooks = [...books];
+    newBooks = newBooks.map((book) => {
+      if (book.name == selectedBook) {
+        const pageToDelete = book.pages.findIndex(
+          (o) => o.name === selectedPage,
+        );
+        book.pages.splice(pageToDelete, 1);
+      }
+      return book;
+    });
+    const nextPage = books.find((b) => b.name === selectedBook)?.pages[0];
+    if (nextPage) {
+      setValue(nextPage.content);
+      setSelectedPage(nextPage.name);
+    } else {
+      setSelectedBook('');
+      setSelectedPage('');
+      setValue('');
+    }
+    setIsConfirmDeleteOpen(false);
+  };
+
+  const deleteBook = () => {
+    let newBooks = [...books];
+    const bookIndex = books.findIndex((b) => b.name === selectedBook);
+    newBooks.splice(bookIndex, 1);
     setBooks(newBooks);
   };
 
@@ -226,6 +278,10 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         editBook,
         editPage,
         handleEditContent,
+        deletePage,
+        isConfirmDeleteOpen,
+        setIsConfirmDeleteOpen,
+        deleteBook,
       }}
     >
       {children}
