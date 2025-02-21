@@ -4,6 +4,8 @@ import useBooks, { IBook } from '../../hooks/useBooks';
 import Down from '../../assets/down.svg?react';
 // @ts-ignore
 import Right from '../../assets/right.svg?react';
+// @ts-ignore
+import Delete from '../../assets/delete.svg?react';
 import PageOption from '../PageOption/PageOption';
 
 interface IBookOption {
@@ -69,7 +71,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
   const [pageInputIsOpen, setPageInputIsOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const { selectedBook, books, editBook } = useBooks();
+  const { selectedBook, books, editBook, deleteBook } = useBooks();
 
   const handleValue = (value: string) => {
     if (books.map((book) => book.name).includes(value)) {
@@ -86,10 +88,10 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
       <div
         className={`${
           selectedBook === book.name ? 'bg-zinc-800' : ''
-        } flex flex-row gap-2 items-center rounded-sm text-[1rem] hover:bg-zinc-800 p-2  hover:cursor-pointer`}
+        } flex flex-row gap-2 items-center rounded-sm text-[1rem] hover:bg-zinc-800 p-2 hover:cursor-pointer`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="w-6 h-6 flex items-center justify-center  self-start">
+        <div className="w-6 h-6 flex items-center justify-center">
           {isOpen ? <Down /> : <Right />}
         </div>
 
@@ -97,7 +99,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           <input
             autoFocus
             defaultValue={book.name}
-            className="outline-0 w-[6rem] self-start"
+            className="outline-0 w-[6rem]"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (e.currentTarget.value.trim() != '') {
@@ -118,7 +120,7 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           />
         ) : (
           <h3
-            className="break-all  self-start"
+            className="break-all "
             onClick={(e) => {
               e.stopPropagation();
               setIsEditing(true);
@@ -128,9 +130,17 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
           </h3>
         )}
         {book.pages.length > 0 ? (
-          <h1 className="bg-zinc-700 text-[0.8rem] font-black rounded-4xl px-[0.5rem] h-[1.2rem] flex items-center justify-center self-start">
+          <h1 className="bg-zinc-700 text-[0.8rem] font-black rounded-4xl px-[0.5rem] h-[1.2rem] flex items-center justify-center">
             {book.pages.length}
           </h1>
+        ) : null}
+        {book.pages.length === 0 ? (
+          <div
+            className="bg-red-900 rounded-md flex items-center justify-center p-1 scale-[0.8]"
+            onClick={() => deleteBook()}
+          >
+            <Delete />
+          </div>
         ) : null}
       </div>
       {isOpen ? (

@@ -17,7 +17,7 @@ const Header: React.FC = () => {
         </h6>
       </div>
       <div
-        className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer hover:bg-zinc-700 lg:w-[2.5vw] "
+        className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer hover:bg-zinc-700 "
         onClick={() => setIsEditing((isEditing) => !isEditing)}
       >
         {isEditing ? <Edit /> : <Book />}
