@@ -1,5 +1,5 @@
 import Editor, { OnChange } from '@monaco-editor/react';
-
+import useBooks from '../../hooks/useBooks';
 interface IMonacoEditor {
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
   value: string | undefined;
@@ -11,8 +11,12 @@ const options = {
 };
 
 const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
+  const { handleEditContent } = useBooks();
   const handleEditorChange: OnChange = (value, _) => {
-    setValue(value);
+    if (value) {
+      setValue(value);
+      handleEditContent(value);
+    }
   };
 
   return (
