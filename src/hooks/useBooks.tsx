@@ -243,6 +243,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       }
       return book;
     });
+
     const nextPage = books.find((b) => b.name === selectedBook)?.pages[0];
     if (nextPage) {
       setValue(nextPage.content);
@@ -253,6 +254,8 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       setValue('');
     }
     setIsConfirmDeleteOpen(false);
+
+    setBooks(newBooks);
   };
 
   const deleteBook = (bookName: string) => {
