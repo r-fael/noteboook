@@ -1,6 +1,5 @@
 import Editor, { OnChange } from '@monaco-editor/react';
 import useBooks from '../../hooks/useBooks';
-import { useState } from 'react';
 interface IMonacoEditor {
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
   value: string | undefined;
