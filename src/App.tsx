@@ -52,7 +52,7 @@ function App() {
 
           <div className="flex flex-col flex-1 gap-2 lg:gap-[2vh]">
             <div
-              className={`font-black text-2xl lg:text-[3vh] break-all justify-between lg:flex items-center flex flex-row lg:flex-row ${
+              className={`font-black text-2xl lg:text-[3vh] break-all justify-between lg:flex items-center flex flex-row lg:flex-row gap-4 ${
                 selectedBook === '' || selectedPage === ''
                   ? 'opacity-0 hidden'
                   : ''
