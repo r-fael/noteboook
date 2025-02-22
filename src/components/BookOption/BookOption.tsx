@@ -136,8 +136,8 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
         ) : null}
         {book.pages.length === 0 ? (
           <div
-            className="bg-red-900 rounded-md flex items-center justify-center p-1 scale-[0.8]"
-            onClick={() => deleteBook()}
+            className="bg-zinc-800 hover:bg-red-800 rounded-md flex items-center justify-center p-1 scale-[0.8]"
+            onClick={() => deleteBook(book.name)}
           >
             <Delete />
           </div>
