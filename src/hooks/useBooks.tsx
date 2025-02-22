@@ -95,7 +95,7 @@ interface IBookContext {
   editPage: (bookName: string, pageName: string, newPageName: string) => void;
   handleEditContent: (content: string) => void;
   deletePage: () => void;
-  deleteBook: () => void;
+  deleteBook: (bookName: string) => void;
   isConfirmDeleteOpen: boolean;
   setIsConfirmDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -255,9 +255,9 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setIsConfirmDeleteOpen(false);
   };
 
-  const deleteBook = () => {
+  const deleteBook = (bookName: string) => {
     let newBooks = [...books];
-    const bookIndex = books.findIndex((b) => b.name === selectedBook);
+    const bookIndex = books.findIndex((b) => b.name === bookName);
     newBooks.splice(bookIndex, 1);
     setBooks(newBooks);
   };

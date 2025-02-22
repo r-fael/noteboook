@@ -57,15 +57,15 @@ function App() {
                 {selectedBook} / {selectedPage}
               </h1>
               {isConfirmDeleteOpen ? (
-                <div className="flex gap-4 my-2 lg:my-0">
+                <div className="flex gap-4 my-2 lg:my-0 w-full lg:w-auto">
                   <div
-                    className="bg-red-900 rounded-md flex items-center justify-center p-2"
+                    className="bg-red-900 hover:bg-red-800 w-[50%] rounded-md flex items-center justify-center p-2"
                     onClick={() => deletePage()}
                   >
                     <Check />
                   </div>
                   <div
-                    className="bg-green-900 rounded-md flex items-center justify-center p-2"
+                    className="bg-green-900 hover:bg-green-800 w-[50%] rounded-md flex items-center justify-center p-2"
                     onClick={() => setIsConfirmDeleteOpen(false)}
                   >
                     <Close />
@@ -73,7 +73,7 @@ function App() {
                 </div>
               ) : (
                 <div
-                  className="bg-red-900 rounded-md flex items-center justify-center p-2 my-2 lg:my-0"
+                  className="bg-zinc-800 hover:bg-red-800 rounded-md flex items-center justify-center p-2 my-2 lg:my-0"
                   onClick={() => setIsConfirmDeleteOpen(true)}
                 >
                   <Delete />
