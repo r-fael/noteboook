@@ -13,6 +13,10 @@ import Delete from './assets/delete.svg?react';
 import Check from './assets/check.svg?react';
 // @ts-ignore
 import Close from './assets/close.svg?react';
+//@ts-ignore
+import Book from './assets/book.svg?react';
+//@ts-ignore
+import Edit from './assets/edit.svg?react';
 import { useState } from 'react';
 
 function App() {
@@ -25,6 +29,7 @@ function App() {
     deletePage,
     isConfirmDeleteOpen,
     setIsConfirmDeleteOpen,
+    setIsEditing,
   } = useBooks();
   const [isListHidden, setIsListHidden] = useState<boolean>(false);
 
@@ -47,7 +52,7 @@ function App() {
 
           <div className="flex flex-col flex-1 gap-2 lg:gap-[2vh]">
             <div
-              className={`font-black text-2xl lg:text-[3vh] break-all justify-between lg:flex items-center ${
+              className={`font-black text-2xl lg:text-[3vh] break-all justify-between lg:flex items-center flex flex-row lg:flex-row ${
                 selectedBook === '' || selectedPage === ''
                   ? 'opacity-0 hidden'
                   : ''
@@ -57,26 +62,34 @@ function App() {
                 {selectedBook} / {selectedPage}
               </h1>
               {isConfirmDeleteOpen ? (
-                <div className="flex gap-4 my-2 lg:my-0 w-full lg:w-auto">
+                <div className="flex gap-4 my-2 lg:my-0 lg:w-auto">
                   <div
-                    className="bg-red-900 hover:bg-red-800 w-[50%] rounded-md flex items-center justify-center p-2"
+                    className="bg-red-900 hover:bg-red-800 rounded-md flex items-center justify-center p-2"
                     onClick={() => deletePage()}
                   >
                     <Check />
                   </div>
                   <div
-                    className="bg-green-900 hover:bg-green-800 w-[50%] rounded-md flex items-center justify-center p-2"
+                    className="bg-green-900 hover:bg-green-800 rounded-md flex items-center justify-center p-2"
                     onClick={() => setIsConfirmDeleteOpen(false)}
                   >
                     <Close />
                   </div>
                 </div>
               ) : (
-                <div
-                  className="bg-zinc-800 hover:bg-red-800 rounded-md flex items-center justify-center p-2 my-2 lg:my-0"
-                  onClick={() => setIsConfirmDeleteOpen(true)}
-                >
-                  <Delete />
+                <div className="flex gap-4">
+                  <div
+                    className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer my-2 lg:my-0 hover:bg-zinc-700 "
+                    onClick={() => setIsEditing((isEditing) => !isEditing)}
+                  >
+                    {isEditing ? <Edit /> : <Book />}
+                  </div>
+                  <div
+                    className="bg-zinc-800 hover:bg-red-800 rounded-md flex items-center justify-center p-2 my-2 lg:my-0"
+                    onClick={() => setIsConfirmDeleteOpen(true)}
+                  >
+                    <Delete />
+                  </div>
                 </div>
               )}
             </div>
