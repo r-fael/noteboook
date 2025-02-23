@@ -3,20 +3,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  //@ts-ignore
-  apiKey: __API_KEY__ ,
-  //@ts-ignore
-  authDomain: __AUTH_DOMAIN__ ,
-  //@ts-ignore
-  projectId: __PROJECT_ID__ ,
-  //@ts-ignore
-  storageBucket: __STORAGE_BUCKET__ ,
-  //@ts-ignore
-  messagingSenderId: __MESSAGING_SENDER_ID__ ,
-  //@ts-ignore
-  appId: __APP_ID__ ,
-  //@ts-ignore
-  measurementId: __MEASUREMENT_ID__
+  apiKey: import.meta.env.VITE_API_KEY ,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN ,
+  projectId: import.meta.env.VITE_PROJECT_ID ,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET ,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID ,
+  appId: import.meta.env.VITE_APP_ID ,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 const app = initializeApp(firebaseConfig);
 
