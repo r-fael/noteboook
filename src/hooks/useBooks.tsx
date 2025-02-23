@@ -6,7 +6,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth, googleProvider, db } from '../config/firebase';
-import { collection, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const newBook: IBook = {
   name: 'new book',
