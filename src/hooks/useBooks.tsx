@@ -1,6 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { signOut, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../config/firebase';
+import {
+  signOut,
+  signInWithPopup,
+  onAuthStateChanged,
+  User,
+} from 'firebase/auth';
+import { auth, googleProvider, db } from '../config/firebase';
+import { collection, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 
 const newBook: IBook = {
   name: 'new book',
@@ -150,22 +156,58 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] =
     useState<boolean>(false);
+  const [useLocalStorage, setUseLocalStorage] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<User | null>(null);
 
   useEffect(() => {
-    const stateParsed = JSON.parse(localStorage.getItem('books') || '[]');
-    if (stateParsed.length === 0) {
-      setBooks(booksMock);
-    } else {
-      setBooks(stateParsed);
-    }
-    setInitialized(true);
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUserInfo(user);
+        fetchText();
+      } else {
+        setIsLoggedIn(false);
+        setUserInfo(null);
+        const stateParsed = JSON.parse(localStorage.getItem('books') || '[]');
+        if (stateParsed.length === 0) {
+          setBooks(booksMock);
+        } else {
+          setBooks(stateParsed);
+        }
+        setUseLocalStorage(true);
+      }
+    });
+    return () => unsubscribe();
+  }, [setUserInfo, isLoggedIn]);
 
   useEffect(() => {
-    if (initialized) localStorage.setItem('books', JSON.stringify(books));
+    if (useLocalStorage) localStorage.setItem('books', JSON.stringify(books));
+    else if (userInfo && initialized) saveText();
   }, [books]);
+
+  const fetchText = async () => {
+    if (userInfo) {
+      const textDoc = doc(db, 'noteboooks', userInfo.uid);
+      const docSnap = await getDoc(textDoc);
+      if (docSnap.exists()) {
+        setBooks(JSON.parse(docSnap.data().content));
+      } else {
+        setBooks([]);
+      }
+      setInitialized(true);
+    }
+  };
+
+  const saveText = async () => {
+    if (books && userInfo) {
+      await setDoc(doc(db, 'noteboooks', userInfo.uid), {
+        content: JSON.stringify(books),
+        uid: userInfo.uid,
+      });
+    }
+  };
 
   const addBook = (bookName: string) => {
     setBooks((books) => [...books, { ...newBook, name: bookName }]);
@@ -276,7 +318,6 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const handleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      console.log(auth?.currentUser?.displayName);
       setIsLoggedIn(true);
     } catch (error) {
       console.log(error);
@@ -286,7 +327,6 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const handleLogOut = async () => {
     try {
       await signOut(auth);
-      console.log(auth?.currentUser?.displayName);
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error);
