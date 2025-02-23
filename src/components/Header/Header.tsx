@@ -5,7 +5,7 @@ import LogIn from '../../assets/login.svg?react';
 import LogOut from '../../assets/logout.svg?react';
 
 const Header: React.FC = () => {
-  const { isLoggedIn, handleSignIn, handleLogOut } = useBooks();
+  const { isLoggedIn, handleSignIn, handleLogOut, userInitials } = useBooks();
   return (
     <div className="flex flex-row p-4 pt-8 lg:p-[4vh] items-start lg:items-end justify-between">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-end justify-start">
@@ -20,11 +20,16 @@ const Header: React.FC = () => {
           by r-fael
         </a>
       </div>
-      <div
-        className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer my-2 lg:my-0 hover:bg-zinc-700"
-        onClick={() => (isLoggedIn ? handleLogOut() : handleSignIn())}
-      >
-        {isLoggedIn ? <LogOut /> : <LogIn />}
+      <div className="flex gap-2">
+        {userInitials ? (
+          <div className="rounded-[4rem] bg-zinc-800 p-2">{userInitials}</div>
+        ) : null}
+        <div
+          className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer my-2 lg:my-0 hover:bg-zinc-700"
+          onClick={() => (isLoggedIn ? handleLogOut() : handleSignIn())}
+        >
+          {isLoggedIn ? <LogOut /> : <LogIn />}
+        </div>
       </div>
     </div>
   );

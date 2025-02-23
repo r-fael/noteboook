@@ -109,6 +109,7 @@ interface IBookContext {
   handleLogOut: () => void;
   handleSignIn: () => void;
   isLoggedIn: boolean;
+  userInitials: string;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -132,6 +133,7 @@ const BookContext = createContext<IBookContext>({
   handleLogOut: () => {},
   handleSignIn: () => {},
   isLoggedIn: false,
+  userInitials: '',
 });
 
 interface IBookProvider {
@@ -163,13 +165,15 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        fetchText();
+        setUserInfo(user);
+        fetchText(user);
       } else {
+        setUserInfo(null);
         getFromLocalStorage();
       }
     });
     return () => unsubscribe();
-  }, [setUserInfo, isLoggedIn]);
+  }, [isLoggedIn]);
 
   const getFromLocalStorage = () => {
     const stateParsed = JSON.parse(localStorage.getItem('books') || '[]');
@@ -186,9 +190,10 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     else if (userInfo) saveText();
   }, [books]);
 
-  const fetchText = async () => {
-    if (userInfo) {
-      const textDoc = doc(db, 'noteboooks', userInfo.uid);
+  const fetchText = async (user: User) => {
+    if (user) {
+      setIsLoggedIn(true);
+      const textDoc = doc(db, 'noteboooks', user.uid);
       const docSnap = await getDoc(textDoc);
       if (docSnap.exists()) {
         setBooks(JSON.parse(docSnap.data().content));
@@ -317,8 +322,10 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const handleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      setUserInfo(auth?.currentUser);
       setIsLoggedIn(true);
+      setValue('');
+      setSelectedPage('');
+      setSelectedBook('');
     } catch (error) {
       console.log(error);
     }
@@ -327,11 +334,22 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const handleLogOut = async () => {
     try {
       await signOut(auth);
-      setUserInfo(null);
       setIsLoggedIn(false);
+      setValue('');
+      setSelectedPage('');
+      setSelectedBook('');
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getUserInitials = () => {
+    return (
+      userInfo?.displayName
+        ?.split(' ')
+        .map((n) => n[0].toLocaleUpperCase())
+        .join('') || ''
+    );
   };
 
   return (
@@ -357,6 +375,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         handleLogOut,
         handleSignIn,
         isLoggedIn,
+        userInitials: getUserInitials(),
       }}
     >
       {children}
