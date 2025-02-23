@@ -12,20 +12,16 @@ const options = {
 
 const commands = {
   '/ch': '- [ ] ',
-  '/list': '- ',
-  '/title1': '# **title**',
-  '/title2': '## **title**',
-  '/title3': '### **title**',
-  '/title4': '#### **title**',
-  '/title5': '##### **title**',
-  '/title6': '###### **title**',
-  '/link': "[text](<link> '<title>')",
-  '/table': `|           |           |           |
-|:---------:|:---------:|:---------:|
-|           |           |           |
-|           |           |           |
-`,
-  '/image': '![text](<link>)',
+  '/h1': '# **title**',
+  '/h2': '## **title**',
+  '/h3': '### **title**',
+  '/h4': '#### **title**',
+  '/h5': '##### **title**',
+  '/h6': '###### **title**',
+  '/a': "[text](<link> '<title>')",
+  '/th': `|           |           |           |\n|:---------:|:---------:|:---------:|`,
+  '/tr': '|           |           |           |',
+  '/img': '![text](<link>)',
 };
 
 const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
@@ -33,6 +29,12 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
 
   const applyCommand = (lines: string[], commandLine: number) => {
     let command: string = lines[commandLine].trim();
+    console.log(command);
+    console.log(lines);
+    console.log(lines.some((l) => l.includes('\n')));
+    if (lines.every((l) => !l.endsWith('\n'))) {
+      lines = lines.map((l) => l + '\n');
+    }
     //@ts-ignore
     lines.splice(commandLine, 1, commands[command]);
     return lines.join('');

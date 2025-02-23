@@ -1,9 +1,10 @@
 # **TO-DO**
 
-- [ ] commands
 - [ ] add search
 - [ ] add tags
 - [ ] add trash
+- [ ] improve commands
+- [x] commands
 - [x] delete book
 - [x] delete page
 - [x] save in cache
