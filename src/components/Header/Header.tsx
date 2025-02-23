@@ -22,7 +22,9 @@ const Header: React.FC = () => {
       </div>
       <div className="flex gap-2">
         {userInitials ? (
-          <div className="rounded-[4rem] bg-zinc-800 p-2">{userInitials}</div>
+          <div className="bg-zinc-800 rounded-[100%] p-2 flex items-center justify-center my-2 lg:my-0 select-none">
+            {userInitials}
+          </div>
         ) : null}
         <div
           className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer my-2 lg:my-0 hover:bg-zinc-700"
