@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { signOut, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../config/firebase';
 
 const newBook: IBook = {
   name: 'new book',
@@ -98,6 +100,9 @@ interface IBookContext {
   deleteBook: (bookName: string) => void;
   isConfirmDeleteOpen: boolean;
   setIsConfirmDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleLogOut: () => void;
+  handleSignIn: () => void;
+  isLoggedIn: boolean;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -118,6 +123,9 @@ const BookContext = createContext<IBookContext>({
   handleEditContent: () => {},
   deletePage: () => {},
   deleteBook: () => {},
+  handleLogOut: () => {},
+  handleSignIn: () => {},
+  isLoggedIn: false,
 });
 
 interface IBookProvider {
@@ -142,7 +150,8 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] =
     useState<boolean>(false);
-  const [initialized, setInitialized] = useState<boolean>();
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const stateParsed = JSON.parse(localStorage.getItem('books') || '[]');
@@ -254,7 +263,6 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       setValue('');
     }
     setIsConfirmDeleteOpen(false);
-
     setBooks(newBooks);
   };
 
@@ -263,6 +271,26 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     const bookIndex = books.findIndex((b) => b.name === bookName);
     newBooks.splice(bookIndex, 1);
     setBooks(newBooks);
+  };
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      console.log(auth?.currentUser?.displayName);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await signOut(auth);
+      console.log(auth?.currentUser?.displayName);
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -285,6 +313,9 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         isConfirmDeleteOpen,
         setIsConfirmDeleteOpen,
         deleteBook,
+        handleLogOut,
+        handleSignIn,
+        isLoggedIn,
       }}
     >
       {children}
