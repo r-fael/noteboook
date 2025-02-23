@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           by r-fael
         </a>
       </div>
-      <div className="flex gap-2">
+      <div className="flex lg:gap-4 gap-4">
         {userInitials ? (
           <div className="bg-zinc-800 rounded-[100%] p-2 flex items-center justify-center my-2 lg:my-0 select-none">
             {userInitials}
