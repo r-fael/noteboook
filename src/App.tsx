@@ -18,6 +18,7 @@ import Book from './assets/book.svg?react';
 //@ts-ignore
 import Edit from './assets/edit.svg?react';
 import { useState } from 'react';
+import useKey from './hooks/useKey';
 
 function App() {
   const {
@@ -31,7 +32,17 @@ function App() {
     setIsConfirmDeleteOpen,
     setIsEditing,
   } = useBooks();
-  const [isListHidden, setIsListHidden] = useState<boolean>(false);
+  const [isListHidden, setIsListHidden] = useState<boolean>(true);
+
+  useKey(
+    'ControlLeft+KeyE',
+    () => {
+      if (selectedPage != '' && selectedBook != '') {
+        setIsEditing((o) => !o);
+      }
+    },
+    true,
+  );
 
   return (
     <div className="font-['Poppins'] w-screen min-h-screen">
@@ -52,13 +63,13 @@ function App() {
 
           <div className="flex flex-col flex-1 gap-2 lg:gap-[2vh]">
             <div
-              className={`font-black text-2xl lg:text-[3vh] break-all justify-between lg:flex items-center flex flex-row lg:flex-row gap-4 ${
+              className={`font-black text-[1.2rem] lg:text-[3vh] break-all justify-between lg:flex items-center flex flex-row lg:flex-row gap-4 ${
                 selectedBook === '' || selectedPage === ''
                   ? 'opacity-0 hidden'
                   : ''
               }`}
             >
-              <h1>
+              <h1 className="lg: ">
                 {selectedBook} / {selectedPage}
               </h1>
               {isConfirmDeleteOpen ? (

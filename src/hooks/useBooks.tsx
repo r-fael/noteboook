@@ -304,6 +304,7 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
       setValue(nextPage.content);
       setSelectedPage(nextPage.name);
     } else {
+      setIsEditing(false);
       setSelectedBook('');
       setSelectedPage('');
       setValue('');

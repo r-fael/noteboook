@@ -4,10 +4,9 @@ import useBooks, { IBook, IPage } from '../../hooks/useBooks';
 interface IPageOption {
   book: IBook;
   page: IPage;
-  key: number;
 }
 
-const PageOption: React.FC<IPageOption> = ({ book, page, key }) => {
+const PageOption: React.FC<IPageOption> = ({ book, page }) => {
   const { handleSelectPage, selectedPage, selectedBook, setValue, editPage } =
     useBooks();
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -31,7 +30,6 @@ const PageOption: React.FC<IPageOption> = ({ book, page, key }) => {
             ? 'bg-zinc-800'
             : ''
         } rounded-sm text-[0.9rem] hover:bg-zinc-800 hover:cursor-pointer p-2 pr-4 ml-8`}
-        key={key}
         onClick={() => {
           setValue(page.content);
           handleSelectPage(book.name, page.name);

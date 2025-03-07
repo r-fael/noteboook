@@ -8,8 +8,8 @@ const Header: React.FC = () => {
   const { isLoggedIn, handleSignIn, handleLogOut, userInitials } = useBooks();
   return (
     <div className="flex flex-row p-4 pt-8 lg:p-[4vh] items-start lg:items-end justify-between">
-      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-end justify-start">
-        <h1 className="text-zinc-200 lg:text-[4vh] text-4xl font-black">
+      <div className="flex flex-col lg:flex-row lg:gap-4 items-start lg:items-end justify-start">
+        <h1 className="text-zinc-200 lg:text-[4vh] text-3xl font-black">
           {'> noteboook _'}
         </h1>
         <a
@@ -22,12 +22,12 @@ const Header: React.FC = () => {
       </div>
       <div className="flex lg:gap-4 gap-4">
         {userInitials ? (
-          <div className="bg-zinc-800 rounded-[100%] p-2 flex items-center justify-center my-2 lg:my-0 select-none">
+          <div className="bg-zinc-800 rounded-[100%] p-2 flex items-center justify-center h-fit lg:my-0 select-none">
             {userInitials}
           </div>
         ) : null}
         <div
-          className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer my-2 lg:my-0 hover:bg-zinc-700"
+          className="bg-zinc-800 rounded-md p-2 flex items-center justify-center hover:cursor-pointer h-fit hover:bg-zinc-700"
           onClick={() => (isLoggedIn ? handleLogOut() : handleSignIn())}
         >
           {isLoggedIn ? <LogOut /> : <LogIn />}

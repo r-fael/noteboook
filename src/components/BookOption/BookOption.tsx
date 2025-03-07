@@ -145,8 +145,8 @@ const BookOption: React.FC<IBookOption> = ({ book }) => {
       </div>
       {isOpen ? (
         <div className="flex flex-col gap-2 mt-2">
-          {book.pages.map((page, key) => (
-            <PageOption book={book} page={page} key={key} />
+          {book.pages.map((page, index) => (
+            <PageOption book={book} page={page} key={index} />
           ))}
           {pageInputIsOpen ? (
             <PageInput
