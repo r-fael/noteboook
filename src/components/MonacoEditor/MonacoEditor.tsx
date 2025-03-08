@@ -36,8 +36,17 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
   const editorRef = useRef<any>(null);
 
   useEffect(() => {
-    editorRef.current = null;
-    setRender((o) => (o === 1 ? o + 1 : o - 1));
+    return () => {
+      if (editorRef.current) {
+        editorRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (editorRef?.current != null) {
+      setRender((o) => (o === 1 ? o + 1 : o - 1));
+    }
   }, [selectedPage]);
 
   useEffect(() => {
@@ -102,7 +111,7 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
   const handleEditorChange: OnChange = (value, event) => {
     let line = -1;
     if (value != undefined) {
-      if (event?.changes[0].text === '\n') {
+      if (['\n', '\r\n'].includes(event?.changes[0].text)) {
         const lines = value.split('\n');
         line = event.changes[0].range.startLineNumber - 1;
         let command = lines[line].replace('\r', '').replace('\n', '');
@@ -123,7 +132,6 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
         setHasToFocus(true);
       }
 
-      console.table(value);
       setValue(value);
       handleEditContent(value);
     }
@@ -133,8 +141,8 @@ const MonacoEditor: React.FC<IMonacoEditor> = ({ setValue, value }) => {
     <div className="lg:h-[75vh] h-[40rem] lg:w-[40vw] w-auto border-4 border-zinc-800 bg-zinc-800 rounded-sm">
       <Editor
         width="auto"
-        key={render}
         height="100%"
+        key={render}
         onChange={handleEditorChange}
         theme="vs-dark"
         language="markdown"
