@@ -1,4 +1,5 @@
-# 📓 Noteboook - Your Personal Markdown Editor
+export const tutorial = 
+`# 📓 Noteboook - Your Personal Markdown Editor
 
 ## 📝 About the Project
 
@@ -24,12 +25,12 @@ Our editor has intuitive commands that make formatting easy:
 
 | Command        | Function                 |
 | -------------- | ------------------------ |
-| `/h1` to `/h6` | Different level headings |
-| `/a`           | Create links             |
-| `/th`          | Table header             |
-| `/tr`          | Table row                |
-| `/img`         | Insert image             |
-| `/ch`          | Create checklist         |
+| \`/h1\` to \`/h6\` | Different level headings |
+| \`/a\`           | Create links             |
+| \`/th\`          | Table header             |
+| \`/tr\`          | Table row                |
+| \`/img\`         | Insert image             |
+| \`/ch\`          | Create checklist         |
 
 ## 🚀 Getting Started
 
@@ -42,7 +43,7 @@ Our editor has intuitive commands that make formatting easy:
 
 - Use books for main themes (Work, Studies, Projects)
 - Create pages for subtopics or specific subjects
-- Use checklists (`/ch`) for your task lists
+- Use checklists (\`/ch\`) for your task lists
 - Organize your content with different heading levels
 - Insert images to make your notes more visual
 
@@ -55,4 +56,4 @@ Our editor has intuitive commands that make formatting easy:
 
 ---
 
-Made with ❤️ for organized note-taking enthusiasts
+Made with ❤️ for organized note-taking enthusiasts`

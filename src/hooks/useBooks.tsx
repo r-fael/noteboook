@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider, db } from '../config/firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { tutorial } from '../tutorial';
 
 const newBook: IBook = {
   name: 'new book',
@@ -20,69 +21,11 @@ const newPage: IPage = {
 
 const booksMock: IBook[] = [
   {
-    name: 'Tutorial',
+    name: '▶️ Getting started',
     pages: [
       {
-        name: 'tutorial',
-        content: `# **Título de Nível 1**  
-## **Título de Nível 2**  
-### **Título de Nível 3**  
-#### **Título de Nível 4**  
-##### **Título de Nível 5**  
-###### **Título de Nível 6**  
-
----
-
-## **Ênfase**  
-*Texto em itálico* ou _assim_.  
-**Texto em negrito** ou __assim__.  
-***Texto em negrito e itálico*** ou **_assim_**.  
-~~Texto riscado~~.
-
----
-
-## **Listas**  
-
-### Lista não ordenada:
-- Item 1  
-- Item 2  
-  - Subitem 2.1  
-  - Subitem 2.2  
-- Item 3  
-
-### Lista ordenada:
-1. Primeiro item  
-2. Segundo item  
-  1. Subitem 2.1  
-  2. Subitem 2.2  
-3. Terceiro item  
-
----
-
-## **Citações**
-> Isso é uma citação de bloco.  
-> Pode ter várias linhas.  
-
----
-
-## **Código**  
-
-Texto com \`código inline\`.  
-
-Bloco de código:  
-
-  \`\`\`python
-def hello():
-    print("Olá, Mundo!")
-\`\`\`
----
-# **Tabela**
-| Produto   | Preço  | Estoque  |
-|:---------:|:------:|:--------:|
-| Notebook  | R$3000 |    10    |
-| Mouse     | R$100  |    50    |
-
-`,
+        name: '🎯 Tutorial',
+        content: tutorial,
       },
     ],
   },
