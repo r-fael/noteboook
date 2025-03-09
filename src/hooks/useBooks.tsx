@@ -110,6 +110,9 @@ interface IBookContext {
   handleSignIn: () => void;
   isLoggedIn: boolean;
   userInitials: string;
+  isMobile: boolean;
+  isListHidden: boolean;
+  setIsListHidden: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookContext = createContext<IBookContext>({
@@ -134,6 +137,9 @@ const BookContext = createContext<IBookContext>({
   handleSignIn: () => {},
   isLoggedIn: false,
   userInitials: '',
+  isMobile: false,
+  isListHidden: false,
+  setIsListHidden: () => {},
 });
 
 interface IBookProvider {
@@ -161,6 +167,19 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
   const [useLocalStorage, setUseLocalStorage] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [isListHidden, setIsListHidden] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -269,6 +288,9 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
     setSelectedBook(book);
     setSelectedPage(page);
     setIsConfirmDeleteOpen(false);
+    if (isMobile) {
+      setIsListHidden(true);
+    }
   };
 
   const handleEditContent = (content: string) => {
@@ -376,7 +398,10 @@ export const BookProvider: React.FC<IBookProvider> = ({ children }) => {
         handleLogOut,
         handleSignIn,
         isLoggedIn,
+        isMobile,
         userInitials: getUserInitials(),
+        isListHidden,
+        setIsListHidden,
       }}
     >
       {children}

@@ -17,7 +17,6 @@ import Close from './assets/close.svg?react';
 import Book from './assets/book.svg?react';
 //@ts-ignore
 import Edit from './assets/edit.svg?react';
-import { useState } from 'react';
 import useKey from './hooks/useKey';
 
 function App() {
@@ -31,8 +30,9 @@ function App() {
     isConfirmDeleteOpen,
     setIsConfirmDeleteOpen,
     setIsEditing,
+    setIsListHidden,
+    isListHidden,
   } = useBooks();
-  const [isListHidden, setIsListHidden] = useState<boolean>(true);
 
   useKey(
     'ControlLeft+KeyE',
